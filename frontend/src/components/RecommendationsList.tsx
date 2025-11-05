@@ -76,7 +76,7 @@ export function RecommendationsList({ onBack, onNext }: RecommendationsListProps
             <strong>Additional Considerations:</strong>
             <ul>
               {analysis.additionalConsiderations.map((consideration, idx) => (
-                <key={idx}>
+                <li key={idx}>
                   {consideration}
                 </li>
               ))}
