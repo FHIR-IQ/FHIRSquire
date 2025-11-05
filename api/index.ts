@@ -18,14 +18,14 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Routes
-app.use('/api/use-case', useCaseRouter);
-app.use('/api/profile', profileRouter);
-app.use('/api/simplifier', simplifierRouter);
+// Routes (no /api prefix - Vercel rewrite handles that)
+app.use('/use-case', useCaseRouter);
+app.use('/profile', profileRouter);
+app.use('/simplifier', simplifierRouter);
 
 // Error handling
 app.use(errorHandler);
