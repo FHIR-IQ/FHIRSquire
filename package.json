@@ -5,18 +5,19 @@
   "private": true,
   "workspaces": [
     "frontend",
-    "backend"
+    "backend",
+    "api"
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:frontend": "npm run dev --workspace=frontend",
     "dev:backend": "npm run dev --workspace=backend",
-    "build": "npm run build --workspaces",
+    "build": "cd frontend && npm install && npm run build",
     "build:frontend": "npm run build --workspace=frontend",
     "build:backend": "npm run build --workspace=backend",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
-    "clean": "rimraf frontend/dist frontend/node_modules backend/dist backend/node_modules node_modules"
+    "clean": "rimraf frontend/dist frontend/node_modules backend/dist backend/node_modules api/dist api/node_modules node_modules"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

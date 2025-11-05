@@ -2,10 +2,11 @@ import axios from 'axios';
 import type { UseCaseData, Analysis, ProfileRecommendation } from '../store/useStore';
 
 const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 60000, // 60 second timeout for Claude API calls
 });
 
 export const api = {
