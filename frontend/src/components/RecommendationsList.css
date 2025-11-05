@@ -1,0 +1,191 @@
+.recommendations-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.analysis-summary {
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.analysis-summary h3 {
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.analysis-content {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.suggested-approach {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+}
+
+.approach-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.approach-use-existing {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.approach-extend-existing {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.approach-create-new {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.rationale {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+}
+
+.considerations {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+}
+
+.considerations ul {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.considerations li {
+  margin-bottom: 0.5rem;
+}
+
+.recommendations-list {
+  margin-bottom: 2rem;
+}
+
+.recommendations-list h3 {
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.recommendation-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.recommendation-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.recommendation-card.selected {
+  border-color: #667eea;
+  background: #f5f7ff;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.recommendation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.recommendation-header h4 {
+  margin: 0 0 0.25rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+}
+
+.ig-name {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.relevance-score {
+  background: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.recommendation-body {
+  margin-top: 1rem;
+}
+
+.reasoning {
+  color: #374151;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.recommendation-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.detail-item {
+  margin-bottom: 0.75rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
+.detail-item strong {
+  color: #1f2937;
+}
+
+.detail-item a {
+  color: #667eea;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.detail-item a:hover {
+  text-decoration: underline;
+}
+
+.element-list {
+  margin: 0.5rem 0 0 1.5rem;
+  padding: 0;
+}
+
+.element-list li {
+  margin-bottom: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8125rem;
+}
+
+.custom-requirements {
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.custom-requirements h3 {
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
