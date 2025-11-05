@@ -36,24 +36,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       organizationContext
     });
 
-    const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 4096,
-      temperature: 0.7,
-      messages: [
-        {
-          role: 'user',
-          content: prompt
-        }
-      ]
-    });
+    // Add timeout wrapper
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Analysis timeout - please try again')), 55000)
+    );
 
-    const content = message.content[0];
-    if (content.type !== 'text') {
-      throw new Error('Unexpected response type from Claude');
-    }
+    const analysisPromise = (async () => {
+      const message = await anthropic.messages.create({
+        model: 'claude-sonnet-4-5-20250929',
+        max_tokens: 2048,
+        temperature: 0.3,
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ]
+      });
 
-    const analysis = parseClaudeResponse(content.text);
+      const content = message.content[0];
+      if (content.type !== 'text') {
+        throw new Error('Unexpected response type from Claude');
+      }
+
+      return parseClaudeResponse(content.text);
+    })();
+
+    const analysis = await Promise.race([analysisPromise, timeoutPromise]);
 
     return res.status(200).json({
       success: true,
@@ -69,42 +78,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 
 function buildAnalysisPrompt(request: any): string {
-  return `You are a FHIR (Fast Healthcare Interoperability Resources) expert specializing in healthcare interoperability standards and profile design. Your task is to analyze a healthcare use case and provide specific, actionable recommendations for FHIR profiles and Implementation Guides.
+  return `You are a FHIR expert. Analyze this use case and recommend FHIR profiles.
 
-**Use Case Details:**
-- **Business Use Case**: ${request.businessUseCase}
-- **Reason for New Profile**: ${request.reasonForProfile}
-- **Specific Use Case**: ${request.specificUseCase}
-- **Data Role**: ${request.dataRole}
-- **Target FHIR Version**: ${request.fhirVersion}
-${request.organizationContext ? `- **Organization Context**: ${request.organizationContext}` : ''}
+Use Case:
+- Business: ${request.businessUseCase}
+- Why profile needed: ${request.reasonForProfile}
+- Specific use: ${request.specificUseCase}
+- Role: ${request.dataRole}
+- FHIR version: ${request.fhirVersion}
+${request.organizationContext ? `- Context: ${request.organizationContext}` : ''}
 
-**Your Task:**
-1. Analyze whether existing FHIR profiles can meet this need, or if a new profile is required
-2. Recommend specific FHIR profiles from well-known Implementation Guides (IGs) like:
-   - US Core Implementation Guide
-   - International Patient Summary (IPS)
-   - mCODE (minimal Common Oncology Data Elements)
-   - CARIN Blue Button
-   - Da Vinci Health Record Exchange (HRex)
-   - C-CDA on FHIR
-   - Other relevant domain-specific IGs
+Provide 2-3 most relevant profile recommendations from IGs like US Core, IPS, mCODE, CARIN, Da Vinci HRex.
 
-3. For each recommendation, specify:
-   - Profile name and URL
-   - Implementation Guide and URL
-   - Relevance score (0-100)
-   - Detailed reasoning for the recommendation
-   - Base FHIR resource
-   - Key must-support elements
-   - Relevant extensions
-
-4. Provide a suggested approach: use-existing, extend-existing, or create-new
-5. Explain the rationale for your approach
-6. List additional considerations (terminology bindings, cardinality constraints, privacy considerations, etc.)
-
-**Response Format:**
-Provide your response as a JSON object with this exact structure:
+Return ONLY valid JSON (no markdown):
 {
   "recommendations": [
     {
@@ -113,19 +99,17 @@ Provide your response as a JSON object with this exact structure:
       "implementationGuide": "string",
       "igUrl": "string",
       "relevanceScore": number,
-      "reasoning": "string",
+      "reasoning": "brief explanation",
       "baseResource": "string",
-      "mustSupportElements": ["string"],
-      "extensions": ["string"]
+      "mustSupportElements": ["element1", "element2"],
+      "extensions": ["ext1"]
     }
   ],
-  "analysis": "string - your detailed analysis",
+  "analysis": "concise analysis of needs",
   "suggestedApproach": "use-existing | extend-existing | create-new",
-  "rationale": "string - explanation of your suggested approach",
-  "additionalConsiderations": ["string"]
-}
-
-Ensure your response is valid JSON only, with no additional text before or after.`;
+  "rationale": "brief rationale",
+  "additionalConsiderations": ["consideration1", "consideration2"]
+}`;
 }
 
 function parseClaudeResponse(responseText: string): any {
