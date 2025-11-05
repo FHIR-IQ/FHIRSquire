@@ -1,4 +1,6 @@
 {
+  "buildCommand": "bash build.sh",
+  "outputDirectory": "frontend/dist",
   "rewrites": [
     {
       "source": "/api/:path*",
