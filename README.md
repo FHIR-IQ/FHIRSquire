@@ -104,10 +104,11 @@ npm run lint             # Lint all code
 ## Technology Stack
 
 - **Frontend**: React, TypeScript, Vite, Zustand
-- **Backend**: Node.js, Express, TypeScript
+- **Backend**: Node.js, Express, TypeScript (Vercel Serverless)
 - **AI**: Anthropic Claude API
 - **FHIR**: HAPI FHIR types, StructureDefinition generation
 - **Integration**: Simplifier.net API
+- **Deployment**: Vercel (all-in-one)
 
 ## API Endpoints
 
@@ -127,6 +128,25 @@ npm run lint             # Lint all code
 - `POST /api/simplifier/projects` - Create new project
 - `POST /api/simplifier/upload` - Upload profile
 - `POST /api/simplifier/ig` - Create Implementation Guide
+
+## Deployment
+
+### Deploy to Vercel (Recommended)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/FHIR-IQ/FHIRSquire)
+
+**Quick Deploy:**
+1. Click the button above or go to https://vercel.com/new
+2. Import the repository
+3. Add environment variable: `ANTHROPIC_API_KEY`
+4. Deploy!
+
+See [VERCEL_DEPLOY.md](VERCEL_DEPLOY.md) for detailed instructions.
+
+**What gets deployed:**
+- Frontend: Static React app served via Vercel CDN
+- Backend: Serverless functions in `/api` directory
+- All in one project, no separate services needed!
 
 ## Contributing
 
