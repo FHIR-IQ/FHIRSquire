@@ -21,6 +21,17 @@ export function UseCaseForm({ onNext }: UseCaseFormProps) {
     organizationContext: '',
   });
 
+  const handleLoadDemo = () => {
+    setFormData({
+      businessUseCase: 'We are building a platform to unify and provide a single source of truth for transition of care and encounters that occurred for a single episode to our partners that are healthcare providers and vendors using our data for insights and better outcomes.',
+      reasonForProfile: 'We looked at US Core profiles and don\'t see something we can use to show this information in a unified way that captures the complete episode of care with all transitions and encounters.',
+      specificUseCase: 'Healthcare providers, vendors, and other healthcare entities will review the effectiveness of care and details about encounters that resulted in transitions (ADT events, transfers, discharges, etc.). They need to see the complete picture of a patient\'s journey through different care settings within a single episode.',
+      dataRole: 'intermediary',
+      fhirVersion: 'R4',
+      organizationContext: 'We are in the United States and are a data aggregator pulling from Care Quality Network and other sources. We aggregate data from multiple EHRs, HIEs, and care coordination systems to provide a comprehensive view of patient episodes.',
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -50,6 +61,17 @@ export function UseCaseForm({ onNext }: UseCaseFormProps) {
         Help us understand your healthcare interoperability needs. Provide detailed information
         about your use case to receive AI-powered recommendations for FHIR profiles.
       </p>
+
+      <div style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
+        <button
+          type="button"
+          onClick={handleLoadDemo}
+          className="btn btn-secondary"
+          style={{ fontSize: '0.875rem' }}
+        >
+          📋 Try Sample Demo - Episode of Care Transitions
+        </button>
+      </div>
 
       {error && <div className="error">{error}</div>}
 
